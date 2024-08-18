@@ -28,7 +28,7 @@ function fetchArticleContent(url, callback) {
 }
 
 function openArticlePopup(title, content, author, subject, time) {
-    const newWindow = window.open('', '_blank', 'width=600,height=400px');
+    const newWindow = window.open('', '_blank', 'width=650px,height=400px');
     
     newWindow.document.write(`
         <!DOCTYPE html>
