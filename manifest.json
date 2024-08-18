@@ -1,0 +1,32 @@
+{
+    "manifest_version": 3,
+    "name": "Article Notifier",
+    "version": "1.0",
+    "description": "Shows the latest article from the site.",
+    "permissions": [
+      "storage",
+      "activeTab"
+    ],
+    "host_permissions": [
+      "https://www.prothomalo.com/*"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://www.prothomalo.com/collection/latest"],
+        "js": ["content.js"]
+      }
+    ],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "icons": {
+      "48": "icon.png"
+    },
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+  }
+  
