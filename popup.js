@@ -33,55 +33,15 @@ function openArticlePopup(title, content, author, subject, time) {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${title}</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    margin: 0;
-                    padding: 20px;
-                    background-color: black;
-                }
-
-                body::-webkit-scrollbar {
-                    display: none;
-                }
-                
-                h1 {
-                    margin-top: 0;
-                    color: red;
-                    text-align: center;
-                }
-
-                #content {
-                    text-align: left;
-                    color: white;
-                    font-size: 12px;
-                }
-
-                .author {
-                    color: blue;
-                    margin-bottom: 10px;
-                    text-align: center;
-                    font-size: 16px;
-                }
-
-                .read-aloud {
-                    display: block;
-                    margin: 20px auto;
-                    padding: 10px 20px;
-                    background-color: blue;
-                    color: white;
-                    border: none;
-                    cursor: pointer;
-                    font-size: 16px;
-                }
-            </style>
+            <link rel="stylesheet" href="content.css">
         </head>
         <body>
         <h1>${title}</h1>
-        <div class="author">প্রতিবেদক: ${author} || বিষয়: ${subject} || ${time}</div>
+        <div class="author">প্রতিবেদক: ${author} || বিষয়: ${subject} || ${time} || <button id="speakButton">শুনুন</button></div>
         <div id="content">${content}</div>
-    </body>
-    
+        <script src="responsivevoice.js?rvApiKey=Tt6q8V3c"></script>
+        <script src="script.js"> </script>
+        </body>
         </html>
     `);
 
@@ -111,6 +71,7 @@ function fetchLatestArticle() {
                         openArticlePopup(title, content, author, subject, time);
                     });
                 });
+
             } else {
                 document.getElementById('article-title').textContent = 'No article available';
                 document.getElementById('article-link').style.display = 'none';
@@ -121,4 +82,18 @@ function fetchLatestArticle() {
         });
 }
 
+function speak() {
+    console.log('Speaking...');
+    // Create a SpeechSynthesisUtterance
+    const utterance = new SpeechSynthesisUtterance("Welcome to this tutorial!");
+  
+    // Select a voice
+    const voices = speechSynthesis.getVoices();
+    utterance.voice = voices[0]; // Choose a specific voice
+  
+    // Speak the text
+    speechSynthesis.speak(utterance);
+  }
+
 fetchLatestArticle();
+// speak();

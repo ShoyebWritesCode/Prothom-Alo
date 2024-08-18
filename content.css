@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: black;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+h1 {
+    margin-top: 0;
+    color: red;
+    text-align: center;
+}
+
+#content {
+    text-align: left;
+    color: white;
+    font-size: 12px;
+}
+
+.author {
+    color: blue;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 16px;
+}
+#speakButton {
+    padding: 6px 12px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px;
+  }
+
+  #speakButton:hover {
+    background-color: blue;
+  }
