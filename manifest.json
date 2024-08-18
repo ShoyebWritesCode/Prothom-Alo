@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Article Notifier",
+    "name": "প্রথম আলো",
     "version": "1.0",
     "description": "Shows the latest article from the site.",
     "permissions": [
