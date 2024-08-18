@@ -11,9 +11,13 @@ function fetchArticleContent(url, callback) {
             const time = doc.querySelector('time span')?.textContent || 'No Time';
 
 
-            const paragraphs = Array.from(doc.querySelectorAll('p'))
+            var paragraphs = Array.from(doc.querySelectorAll('p'))
                                     .map(p => p.innerHTML)
                                     .join('<br><br>');
+            
+                                    if (paragraphs === '') {
+                                        paragraphs = `এই এক্সটেনশনে ভিডিও এবং ছবি রিপোর্ট উপলব্ধ নয়। লিঙ্ক থেকে সরাসরি পড়ুন।<a href="${url}" target="_blank">এখানে ক্লিক করুন|</a>`;
+                                    }
 
 
             callback(title, paragraphs, author, subject, time);
