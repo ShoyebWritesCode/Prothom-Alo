@@ -7,11 +7,21 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h1>সর্বশেষ</h1>
+  <div class="header-container">
+    <h1 id="latest-news-heading" class="active">সর্বশেষ সংবাদ</h1> 
+    <h1 id="today-paper-heading" class="header">আজকের পত্রিকা</h1>
+  </div>
+
   <div id="article">
     <p class="article-title" id="article-title"></p>
     <a href="#" id="article-link" class="button">বিস্তারিত পড়ুন</a>
   </div>
+
+  <div id="today-paper" style="display: none;">
+    <p id="bangla-date"></p>
+    <button class="button" id="fetchButton">পড়ুন</button>
+  </div>
+
   <script src="popup.js"></script>
   <script src="script.js"></script>
 </body>

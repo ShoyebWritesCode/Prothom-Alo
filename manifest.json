@@ -10,7 +10,8 @@
   ],
   "host_permissions": [
     "https://www.prothomalo.com/*",
-    "https://nagorik.prothomalo.com/*"
+    "https://nagorik.prothomalo.com/*",
+    "https://mzamin.com/printversion.php"
   ],
   "background": {
     "service_worker": "background.js"

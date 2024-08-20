@@ -86,18 +86,103 @@ function fetchLatestArticle() {
         });
 }
 
-function speak() {
-    console.log('Speaking...');
-    // Create a SpeechSynthesisUtterance
-    const utterance = new SpeechSynthesisUtterance("Welcome to this tutorial!");
-  
-    // Select a voice
-    const voices = speechSynthesis.getVoices();
-    utterance.voice = voices[0]; // Choose a specific voice
-  
-    // Speak the text
-    speechSynthesis.speak(utterance);
-  }
-
 fetchLatestArticle();
-// speak();
+
+document.addEventListener("DOMContentLoaded", function() {
+    const headers = document.querySelectorAll("#latest-news-heading, #today-paper-heading");
+  
+    headers.forEach(header => {
+      header.addEventListener("click", function() {
+        headers.forEach(h => h.classList.remove("active"));
+        this.classList.add("active");
+      });
+    });
+  });
+  
+document.getElementById('latest-news-heading').addEventListener('click', () => {
+    const articleSection = document.getElementById('article');
+    const todayPaperSection = document.getElementById('today-paper');
+    
+      articleSection.style.display = 'block';
+      todayPaperSection.style.display = 'none';
+ 
+  });
+  
+  document.getElementById('today-paper-heading').addEventListener('click', () => {
+    const articleSection = document.getElementById('article');
+    const todayPaperSection = document.getElementById('today-paper');
+
+      todayPaperSection.style.display = 'block';
+      articleSection.style.display = 'none';
+  });
+  
+  const banglaWeekdays = ['রবিবার', 'সোমবার', 'মঙ্গলবার', 'বুধবার', 'বৃহস্পতিবার', 'শুক্রবার', 'শনিবার'];
+  const banglaMonths = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+  
+  function getBanglaDate() {
+    const today = new Date();
+    const day = banglaWeekdays[today.getDay()];
+    const date = today.getDate().toLocaleString('bn-BD');	
+    const month = banglaMonths[today.getMonth()];
+    const year = today.getFullYear().toString().replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+    
+    return `${day}, ${date} ${month}, ${year}`;
+  }
+  
+  document.getElementById('bangla-date').textContent = getBanglaDate();
+
+document.getElementById('fetchButton').addEventListener('click', () => {
+    fetch('https://mzamin.com/printversion.php')
+      .then(response => response.text())
+      .then(data => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        
+        const targetDiv = doc.querySelector('div.row.mb-5');
+        
+        if (targetDiv) {
+            const imgElements = targetDiv.querySelectorAll('img');
+            const imgSrcs = Array.from(imgElements).map(img => {
+              let src = img.src;
+              const prefix = 'chrome-extension://pbmfcllhdknchdhhpnfgcckmpfnnohfm/';
+              if (src.startsWith(prefix)) {
+                src = src.replace(prefix, '');
+              }
+              src = src.replace('/thumb', ''); 
+                src = 'https://mzamin.com/' + src;
+              return src;
+            });
+
+          const newWindow = window.open('', '_blank', 'width=800,height=600');
+          newWindow.document.write('<!DOCTYPE html><html><head> <title>মানবজমিন:আজকের পত্রিকা</title></head><body>');
+          if (imgSrcs.length > 0) {
+            const firstImg = imgSrcs.splice(22, 1)[0]; 
+            imgSrcs.unshift(firstImg); 
+          
+            imgSrcs.forEach(src => {
+              newWindow.document.write(`<img src="${src}" alt="Image" style="max-width: 100%; height: auto; border: 2px">`);
+            });
+
+             // Add a button to print the page
+             newWindow.document.write(`
+             <button id="printButton">প্রিন্ট</button>
+             <script src="print.js"></script>
+             `);
+
+          }
+          else {
+            newWindow.document.write('<p>No images found in the specified div.</p>');
+          }
+          newWindow.document.write('</body></html>');
+          newWindow.document.close();
+        } else {
+          console.error('No div with class "row mb-5" found.');
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  });
+
+
+  
