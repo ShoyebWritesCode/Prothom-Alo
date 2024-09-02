@@ -144,7 +144,7 @@ document.getElementById('fetchButton').addEventListener('click', () => {
             const imgElements = targetDiv.querySelectorAll('img');
             const imgSrcs = Array.from(imgElements).map(img => {
               let src = img.src;
-              const prefix = 'chrome-extension://pbmfcllhdknchdhhpnfgcckmpfnnohfm/';
+              const prefix = 'chrome-extension://hepjgcfdncfnkgklncifhlmnhhlakmhi/';
               if (src.startsWith(prefix)) {
                 src = src.replace(prefix, '');
               }
